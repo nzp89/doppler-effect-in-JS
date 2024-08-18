@@ -12,7 +12,7 @@
     <style type="text/css">
 	    html,body{
            margin: 0 auto;
-	       color: black;
+	       color: #8d66f0;
 	       font-family:sans-serif;
 	    }
 	    h1{
@@ -22,19 +22,55 @@
 	      margin:5em;
 	      line-height: 1.5em;
 	    }
-	    div{
+	    .section1{
 		  width: 100%;
 		  height: 100vh;
 		  display: flex;
 		  align-items: center;
           justify-content: center;
+          flex-direction: column;
 		}
+        .label-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+		input[type=radio] {
+            display: none; /* ラジオボタンを非表示にする */
+        }
+        input[type="radio"]:checked + label {
+            background: #8d66f0; /* 選択時の背景色 */
+            color: #ffffff; /* 選択時のフォント色 */
+        }
+		.label {
+            display: block;
+            margin: 5px;
+            width: 50%;
+            height: 45px;
+            color: white;
+            text-align: center;
+            line-height: 45px;
+            cursor: pointer;
+            background-color: #5c5c65;
+            border-radius: 5px;
+            font-size: 30px;
+        }
+        .label:hover {
+            background-color: #8d66f0; /* マウスオーバー時の背景色 */
+        }
     </style>
 </head>
 <body>
    <div class="section1">
 	 <h1>DOPPLER EFFECT</h1>
+	 <div class="label-container">
+		<input type="radio" name="operation" value="stop" id="stop" checked><label for="stop" class="label">STOP</label>
+		<input type="radio" name="operation" value="normal" id="norm"><label for="norm" class="label">NORMAL</label>
+		<input type="radio" name="operation" value="sonic" id="soni"><label for="soni" class="label">SONIC</label>
+		<input type="radio" name="operation" value="supersonic" id="supe"><label for="supe" class="label">SUPER SONIC</label>
+	</div>
    </div>
-
+   
 </body>
 </html>
