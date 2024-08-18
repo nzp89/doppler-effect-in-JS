@@ -3,7 +3,7 @@ let NORMAL_SPEED = 20;
 let SOUND_SPEED = 30;
 let SUPERSONIC_SPEED = 40;
 
-let speed = NORMAL_SPEED;     // 描画間隔ごとに、円が右から左へ移動する量
+let speed;
 
 let interval = 500; // 円を描画する間隔（ミリ秒）
 
@@ -11,10 +11,27 @@ let X; // 円の描画を開始するときのX座標
 let Y; // 円の描画を開始するときのY座標
 let MAX_SIZE; // 円の最大サイズ（直径）
 
+let centerX;
+let centerY;
+let center_speed = 1;
+
 let lastCircleTime = 0; // 前回円を描画した時刻
 let circles = []; // 円の配列
 
 let isAnimating = true;
+
+function decideSpeed(){
+    const operation = document.querySelector('input[name="operation"]:checked').value;
+    if (operation === "stop") {
+        speed = STOP_SPEED;
+    } else if (operation === "normal") {
+        speed = NORMAL_SPEED;
+    } else if (operation === "sonic") {
+        speed = SOUND_SPEED;
+    } else if (operation === "supersonic") {
+        speed = SUPERSONIC_SPEED;
+    }     // 描画間隔ごとに、円が右から左へ移動する量
+}
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);//3Dの場合は引数にWEBGLを忘れずに！
@@ -28,6 +45,8 @@ function setup(){
     background(30);
     X = windowWidth; // HTMLウィンドウの右端に設定
     Y = windowHeight / 2; // ウィンドウの中央に設定
+    centerX = X;
+    centerY = Y;
     MAX_SIZE = windowHeight;
 }
 
@@ -38,6 +57,7 @@ function draw() {
     let currentTime = millis();
 
     if (isAnimating) {
+        decideSpeed();
         // 一定の間隔で新しい円を生成
         if (currentTime - lastCircleTime > interval) {
             // 円を描く位置のX座標を更新する
@@ -59,7 +79,17 @@ function draw() {
             circles[i].display();
             circles[i].grow();
         }
+        
     }
+    
+}
+
+// 円の中心を描画する関数
+function drawCenterCircle(x, y) {
+    let centerRadius = 5; // 固定円の半径
+    fill(255, 110, 0); 
+    noStroke();
+    ellipse(x, y, centerRadius * 2);
 }
 
 class Circle {
